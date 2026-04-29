@@ -1,0 +1,96 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
+  font-family: 'Press Start 2P', monospace;
+  color: #eaeaea;
+  text-align: center;
+}
+
+
+.top, .middle, .bottom {
+  margin: 25px auto;
+  padding: 25px;
+  width: 80%;
+  max-width: 600px;
+
+  background: rgba(20, 20, 40, 0.85);
+  border: 2px solid #00f0ff;
+  border-radius: 12px;
+
+  box-shadow: 0 0 15px #00f0ff55, inset 0 0 10px #000;
+}
+
+
+h2, h3 {
+  color: #00f0ff;
+  text-shadow: 0 0 8px #00f0ff;
+  margin-bottom: 20px;
+}
+
+
+p {
+  font-size: 12px;
+  margin: 10px 0;
+}
+
+
+span {
+  color: #00ff9f;
+  text-shadow: 0 0 5px #00ff9f;
+}
+
+
+button {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 12px 18px;
+  margin: 10px;
+
+  background: linear-gradient(145deg, #00f0ff, #0066ff);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px #0066ff;
+}
+
+
+button:hover {
+  transform: scale(1.1);
+  background: linear-gradient(145deg, #00ff9f, #00cc66);
+  box-shadow: 0 0 15px #00ff9f, 0 0 25px #00cc66;
+}
+
+
+button:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 5px #00f0ff;
+}
+
+
+.middle {
+  border-color: #ff4d4d;
+  box-shadow: 0 0 15px #ff4d4d55, inset 0 0 10px #000;
+}
+
+.middle h2 {
+  color: #ff4d4d;
+  text-shadow: 0 0 8px #ff4d4d;
+}
+
+.bottom {
+  border-color: #ffd700;
+  box-shadow: 0 0 15px #ffd70055, inset 0 0 10px #000;
+}
+
+.bottom h3 {
+  color: #ffd700;
+  text-shadow: 0 0 8px #ffd700;
+}
