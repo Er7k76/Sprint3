@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Mini RPG</title>
+<style>
+body { font-family: Arial; background:#111; color:#fff; text-align:center; }
+.top, .middle, .bottom { margin:20px; padding:20px; border:1px solid #444; border-radius:10px; }
+button { padding:10px 20px; font-size:16px; margin:10px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h2>Player</h2>
+  <p>Highscore: <span id="highscore">0</span></p>
+  <p>Vida: <span id="health"></span></p>
+  <p>Dano: <span id="damage"></span></p>
+  <p>Score: <span id="score"></span></p>
+  <p>Gold: <span id="gold"></span></p>
+</div>
+
+<div class="middle">
+  <h2>Goblin</h2>
+  <p>Level: <span id="enemyLevel"></span></p>
+  <p>Vida: <span id="enemyHealth"></span></p>
+  <p>Dano: <span id="enemyDamage"></span></p>
+  <button onclick="attack()">Atacar</button>
+</div>
+
+<div class="bottom">
+  <h3>Melhorias</h3>
+  <button onclick="upgradeHealth()">Melhorar Vida (<span id="healthCost">1</span> gold)</button>
+  <button onclick="upgradeDamage()">Melhorar Dano (<span id="damageCost">1</span> gold)</button>
+</div>
+
+<script>
+let health = 10;
+let maxHealth = 10;
+let damage = 10;
+let playername = "Player";
+let score = 0;
+let highscore = 0;
+let gold = 0;
+
+let enemyLevel = 1;
+let enemyHealth = 3;
+let enemyMaxHealth = 3;
+let enemyDamage = 3;
+let enemyGoldDrop = 1;
+
+let playerRole = 0;
+let enemyRole = 0;
+
+let healthCost = 1;
+let damageCost = 1;
+
+function updateUI() {
+  document.getElementById("health").innerText = Math.floor(health);
+  document.getElementById("damage").innerText = Math.floor(damage);
+  document.getElementById("score").innerText = score;
+  document.getElementById("gold").innerText = gold;
+  document.getElementById("enemyLevel").innerText = enemyLevel;
+  document.getElementById("enemyHealth").innerText = Math.floor(enemyHealth);
+  document.getElementById("enemyDamage").innerText = Math.floor(enemyDamage);
+  document.getElementById("highscore").innerText = highscore;
+  document.getElementById("healthCost").innerText = healthCost;
+  document.getElementById("damageCost").innerText = damageCost;
+}
+
+function attack() {
+  playerRole = Math.floor(Math.random() * 11);
+  enemyRole = Math.floor(Math.random() * 11);
+
+  let playerHit = damage * (playerRole / 10);
+  let enemyHit = enemyDamage * (enemyRole / 10);
+
+  enemyHealth -= playerHit;
+  health -= enemyHit;
+
+  if (enemyHealth <= 0) {
+    enemyLevel++;
+    enemyMaxHealth *= 1.2;
+    enemyDamage *= 1.2;
+    enemyGoldDrop *= 1.2;
+
+    enemyHealth = enemyMaxHealth;
+    health = maxHealth;
+
+    let gainedGold = Math.floor(enemyGoldDrop);
+    gold += gainedGold;
+    score += gainedGold;
+  }
+
+  if (health <= 0) {
+    if (score > highscore) {
+      highscore = score;
+    }
+
+    health = 10;
+    maxHealth = 10;
+    damage = 10;
+    score = 0;
+    gold = 0;
+
+    enemyLevel = 1;
+    enemyMaxHealth = 3;
+    enemyHealth = 3;
+    enemyDamage = 3;
+    enemyGoldDrop = 1;
+
+    healthCost = 1;
+    damageCost = 1;
+  }
+
+  updateUI();
+}
+
+function upgradeHealth() {
+  if (gold >= healthCost) {
+    gold -= healthCost;
+    maxHealth *= 1.5;
+    health = maxHealth;
+    healthCost *= 2;
+    updateUI();
+  }
+}
+
+function upgradeDamage() {
+  if (gold >= damageCost) {
+    gold -= damageCost;
+    damage *= 1.5;
+    damageCost *= 2;
+    updateUI();
+  }
+}
+
+updateUI();
+</script>
+
+</body>
+</html>
