@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<head>
-  <meta charset="UTF-8">
-  <title>Mini RPG</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="UTF-8">
+<title>Mini RPG</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="top">
-  <h2>Player</h2>
-  <p>Highscore: <span id="highscore">0</span></p>
+  <h2 id="playerName">Player</h2>
+  <p>Highscore: <span id="highscore">0</span> (<span id="highscoreName">-</span>)</p>
   <p>Vida: <span id="health"></span></p>
   <p>Dano: <span id="damage"></span></p>
   <p>Score: <span id="score"></span></p>
@@ -19,7 +17,7 @@
 </div>
 
 <div class="middle">
-  <h2>Goblin</h2>
+  <h2 id="enemyName">Goblin</h2>
   <p>Level: <span id="enemyLevel"></span></p>
   <p>Vida: <span id="enemyHealth"></span></p>
   <p>Dano: <span id="enemyDamage"></span></p>
@@ -39,6 +37,7 @@ let damage = 10;
 let playername = "Player";
 let score = 0;
 let highscore = 0;
+let highscoreName = "-";
 let gold = 0;
 
 let enemyLevel = 1;
@@ -53,7 +52,23 @@ let enemyRole = 0;
 let healthCost = 1;
 let damageCost = 1;
 
+let monsters = ["Goblin", "Zombie", "High-Goblin", "Ogre", "Lizardman", "Skeleton", "Spider"];
+let currentMonster = "Goblin";
+
+function getRandomMonster() {
+  return monsters[Math.floor(Math.random() * monsters.length)];
+}
+
+function askPlayerName() {
+  let name = "";
+  while (!name || name.trim() === "") {
+    name = prompt("Escreve o nome do teu personagem:");
+  }
+  playername = name;
+}
+
 function updateUI() {
+  document.getElementById("playerName").innerText = playername;
   document.getElementById("health").innerText = Math.floor(health);
   document.getElementById("damage").innerText = Math.floor(damage);
   document.getElementById("score").innerText = score;
@@ -62,8 +77,10 @@ function updateUI() {
   document.getElementById("enemyHealth").innerText = Math.floor(enemyHealth);
   document.getElementById("enemyDamage").innerText = Math.floor(enemyDamage);
   document.getElementById("highscore").innerText = highscore;
+  document.getElementById("highscoreName").innerText = highscoreName;
   document.getElementById("healthCost").innerText = healthCost;
   document.getElementById("damageCost").innerText = damageCost;
+  document.getElementById("enemyName").innerText = currentMonster;
 }
 
 function attack() {
@@ -88,12 +105,17 @@ function attack() {
     let gainedGold = Math.floor(enemyGoldDrop);
     gold += gainedGold;
     score += gainedGold;
+
+    currentMonster = getRandomMonster();
   }
 
   if (health <= 0) {
     if (score > highscore) {
       highscore = score;
+      highscoreName = playername;
     }
+
+    askPlayerName();
 
     health = 10;
     maxHealth = 10;
@@ -109,6 +131,8 @@ function attack() {
 
     healthCost = 1;
     damageCost = 1;
+
+    currentMonster = "Goblin";
   }
 
   updateUI();
@@ -133,6 +157,7 @@ function upgradeDamage() {
   }
 }
 
+askPlayerName();
 updateUI();
 </script>
 
